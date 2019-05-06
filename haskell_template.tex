@@ -1,0 +1,72 @@
+\documentclass[twocolumn]{article}
+
+\usepackage[yyyymmdd]{datetime}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{comment}
+\usepackage{url}
+\usepackage{listings}
+\renewcommand{\dateseparator}{--}
+
+\begin{comment}
+luksa2018parallelisation -> http://www.inf.u-szeged.hu/~cscs/pdf/cscs2018.pdf#page=139
+porkolab2009c++ -> http://aszt.inf.elte.hu/~gsd/s/cikkek/abel/haskelltmp.pdf
+\section{Speeding up Haskell with parallelisation}
+In order to make our compiler generate faster and more efficient C++ code, we need to produce perfect Haskell code in terms of speed. One method to reach this is to refactor the Haskell program using parallelisation. With parallelism\cite{luksa2018parallelisation}. Our work contains developing a low cost algorithm to decide whether paralellisation should be used or not.
+\end{comment}
+
+\title{Creating an efficient Haskell into C++ template metaprogram compiler}
+\date{\today}
+\author{Borsos Levente, Puha Márk, Szalai Norbert}
+
+\begin{document}
+  \pagenumbering{gobble}
+  \maketitle
+  \newpage
+  \pagenumbering{arabic}
+
+
+\section*{Abstract}
+
+There are different cases in C++ when we want to operate on data what is available at compile time. In these cases we have the option to write template metaprograms, with this we get more efficient runtime for an increased compile time or another option would be to write the corresponding functions in Haskell and call them from C++, but this has a huge overhead.  For this reason, we want to develop a compiler what could generate  C++ template metaprograms from Haskell so the overhead of the Haskell function calls would assimilate with the C++ compile phase achieving 100\% faster runtime performance.
+
+\section{Introduction}
+Nowadays the use of template metaprogramming ofter occurs in modern, up-to-date C++ codes. The main reason is the ability of template metaprogrmming to make complex algorithm execution at compile time. Template metaprograms are used to ... \\ ---- -Az alábbi cikkszöveg feldolgozása ----- \\ Among the application areas of template metaprograms are
+the expression templates, static interface checking, code optimization with adaption, language embedding and active libraries. However, as this capability of C++ was not a primary design goal, the
+language is not capable of clean expression of template metaprograms. The complicated syntax leads to the creation of code that
+is hard to write, understand and maintain. Despite that template
+metaprogramming has a strong relationship with functional programming paradigm, existing libraries do not follow these requirements. \\ ----- Cikkszöveg vége ----- \cite{porkolab2009c++}  \\
+In section 2 we discuss currently used methods to generate C++ metaprograms from Haskell(-like) code. In section 3 we present our approach of compiling Haskell code. In section 4 ... TODO
+\colorbox{orange!30}{C++ Metaprogramming bevezetés}
+\colorbox{orange!30}{+ Miért lenne érdemes Haskellt használni}
+\colorbox{orange!30}{Vagy hogyan használhatjuk a Haskellt} 
+\colorbox{orange!30}{C++ metaprogram generálásához}
+\section{Current Haskell to C++ metaprogram compilers}
+The currently available Haskell to C++ metaprogram compilers have different methods to generate C++ metaprograms, but share strong disadvantages like functionality limitations or low speed. In this paper we discuss two popular compiling methods.
+\subsection{Compiling with other languages}
+This is the most used method to generate C++ metaprograms from Haskell code. The Haskell code goes through at least two different languages' transformation before the metaprogram code is generated from it. One functioning approach is to translate Haskell code to a similar language which will be the input for the language which will be parsed to C++ template metaprogram code. For example, C++ metaprogram code can be generated with translating Haskell code to Haskell-like \textit{Yhc.Core} code, which is adjusted to \textit{Lambda} language. Finally the Lambda code is used to generate C++ metaprogram code.\cite{porkolab2009c++} This method has high time costs because the Haskell code goes through many different transformations and translations.
+\subsection{compiling with one Haskell-like language}
+This method uses only one Haskell-like language to generate C++ metaprogram code. The first "Haskell-like code to C++ template metaprogram" compiler, MetaFun\cite{metafun} uses this method to make C++ metaprogram code from \textit{Kiff} language. This language substitutes Haskell to make generating template metaprograms easier and faster to code. While this method is faster than the first in terms of coding and code generating, using a Haskell-like language comes with many disadvantages: The language likely won't support all useful Haskell strategies, functions and expressions and might be not optimized well (e. g. Kiff doesn't allow currying in function calls, it has no support for lambda expressions and has zero optimization) and the new language must be learnt properly to generate fast and correct template metaprograms.
+\begin{lstlisting}[language=Haskell, caption =Definition of sum using Kiff with comments of missing functions]
+foldl :: (a -> b -> a) -> a -> [b] -> a
+foldl f x [] = x
+foldl f x (y:ys) = foldl f (f x y) ys
+
+-- The builtin operators are not
+--first-class functions
+add x y = x + y
+-- Currying is not yet supported 
+sum xs = foldl add 0 xs   
+\end{lstlisting}
+
+\section{Compiling from Haskell directly}
+Our compiler (FHC = Fast Haskell to C++) uses .............. language and pure Haskell code to generate C++ metaprogram.
+\paragraph{Paragraph}
+
+Some more text. 
+
+\bibliography{references} 
+\bibliographystyle{ieeetr}
+
+
+\end{document}
