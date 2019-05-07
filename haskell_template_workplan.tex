@@ -1,12 +1,32 @@
 \documentclass{article}
 
+\usepackage{t1enc}
+\usepackage{eurosym}
+\usepackage[magyar]{babel}
+\usepackage[utf8]{inputenc}
 \usepackage[yyyymmdd]{datetime}
 \usepackage{enumitem}
+\usepackage{multirow}
+\usepackage{fancyhdr}
+
 \renewcommand{\dateseparator}{--}
+
+\addto\captionsmagyar{
+	\renewcommand{\contentsname}
+	{Table of Contents}
+}
 
 \title{Creating an efficient Haskell into C++ template metaprogram compiler}
 \date{\today}
 \author{Borsos Levente, Puha Márk, Szalai Norbert}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R,LO]{Project Number: 323625}
+\fancyhead[L,RO]{Project Acronym: HtoCppMetaCom}
+
+
 
 \begin{document}
   \pagenumbering{gobble}
@@ -14,55 +34,368 @@
   \newpage
   \pagenumbering{arabic}
 
-
-
-\section{Workplan}
-
-\begin{enumerate}[label=\textbf{WP\arabic*:}]
-\newpage
-\item \textbf{TODO}
-\paragraph{Objectives:} \paragraph{}
-TODO
-\paragraph{Description of the work:} \paragraph{}
-TODO
-\paragraph{Description of Deliverables:} \paragraph{}
-TODO
+\thispagestyle{empty}
+\tableofcontents
 
 \newpage
-\item \textbf{TODO}
-\paragraph{Objectives:} \paragraph{}
-TODO
-\paragraph{Description of the work:} \paragraph{}
-TODO
-\paragraph{Description of Deliverables:} \paragraph{}
-TODO
+\thispagestyle{empty}
+
+\section{A1: Project summary}
+
+\begin{table}[htbp]
+\centering
+	\begin{tabular}{ |c|p{4cm}|  }
+		\hline
+		Project Number & 323625\\ \hline
+		Project Acronym & HtoCppMetaCom\\ \hline
+		Project title &Creating an efficient Haskell into C++ template metaprogram compiler \\ \hline
+		Starting date & 2019.08.01.  \\ \hline
+		Duration in months   & 24   \\ \hline
+		Call (part) identifier & ABC-GFE-2019-07  \\ \hline
+		Free keywords & template programming, compiler, haskell, c++  \\ \hline
+	\end{tabular}
+\end{table}
+\textbf{Abstract}:
+There are different cases in C++ when we want to operate on data what is available at compile time. In these cases we have the option to write template metaprograms, with this we get more efficient runtime for an increased compile time or another option would be to write the corresponding functions in Haskell and call them from C++, but this has a huge overhead.  For this reason, we want to develop a compiler what could generate  C++ template metaprograms from Haskell so the overhead of the Haskell function calls would assimilate with the C++ compile phase achieving 100\% faster runtime performance.
+\newpage
+
+\section{A2: List of beneficiaries}
+
+\begin{center}
+	\begin{tabular}{ |c|p{2cm}|c|c|p{1cm}|p{1cm}| }
+		\hline
+		No & Name & Short name & Country & Project entry month & Project exit month \\ \hline
+		1 & Eötvös Lóránd University & ELTE & Hungary & 1 & 24 \\ \hline
+		2 & Elte-Soft Nonprofit Kft. & Elte-Soft & Hungary & 1 & 24 \\ \hline
+		3 & Indiana University & IU & USA & 1 & 24 \\ \hline
+	\end{tabular}
+\end{center}
+
+\section{A3: Overall budget breakdown for the project}
+
+\begin{center}
+	\begin{tabular}{ |p{2cm}|||p{1.8cm}|p{1.8cm}|p{1.8cm}||p{2cm} | }
+		\hline
+		Participant name & Eötvös Lóránd University & Elte-Soft Nonprofit Kft & Indiana University & Total \\ \hline
+		Participant number in this project & 1 & 2 & 3 &
+		 \\ \hline
+ 		Participant short name & ELTE & Elte-Soft & IU &
+ 		 \\ \hline
+ 		Fund.\% & 75.0 & 75.0 & 75.0 &
+ 		 \\ \hline
+ 		Ind. costs &  Actual Costs & Actual Costs & Transitional Flat rate &
+ 		 \\ \hline
+ 		RTD / Innovation(A) & \EUR{434,175.00} & \EUR{395,120.00} & \EUR{502,952.00} & \EUR{1,332,247.00}
+ 		\\ \hline
+ 		Demonstration (B) & \EUR{0.00} & \EUR{0.00} & \EUR{0.00} & \EUR{0.00}
+ 		\\ \hline
+ 		Management (C) & \EUR{156,308.00} & \EUR{0.00} & \EUR{0.00} & \EUR{156,308.00}
+ 		\\ \hline
+ 		Other (D) & \EUR{0.00} & \EUR{8,500.00} & \EUR{8,500.00} & \EUR{17,000.00}
+ 		\\ \hline
+ 		Total (A+B+C+D) & \EUR{590,483.00} & \EUR{403,620.00} & \EUR{511,452.00} & \EUR{1,505,555.00}
+ 		\\ \hline
+ 		Requested EU contribution &  \EUR{442,862.00} & \EUR{302,715.00} & \EUR{383.589.00} & \EUR{1,129,166.00}
+ 		\\ \hline
+		%\multirow{5}{}{Estimated eligible costs (whole duration of the project)} 
+		 
+	\end{tabular}
+\end{center}
 
 \newpage
-\item \textbf{TODO}
-\paragraph{Objectives:} \paragraph{}
-TODO
-\paragraph{Description of the work:} \paragraph{}
-TODO
-\paragraph{Description of Deliverables:} \paragraph{}
-TODO
+\section{WT1: List of work packages}
+
+\begin{center}
+	\begin{tabular}{ |p{1cm}|p{2.8cm}|p{1cm}|p{1cm}|p{1cm}|p{0.8cm}|p{0.8cm}| }
+		\hline
+		WP Number & WP Title & Type of activity & Lead beneficiary number & Person-months & Start month & End month \\ \hline
+		WP 1 & MANAGEMENT & MGT & 1 & 8.00 & 1 & 24 \\ \hline
+		WP 2 & REQUIREMENTS IDENTIFICATION & RTD & 3 & 25.00 & 1 & 24 \\ \hline
+		WP 3 & RESEARCH C++ TEMPLATE METAPROGRAMMING & RTD & 2 & 33.00 & 1 & 24 \\ \hline
+		WP 4 & HASKELL TO C++ COMPILER & RTD & 1 & 61.00 & 1 & 24 \\ \hline
+		WP 5 & IMPROVE COMPILER & RTD & 1& 80.00 & 1 & 24 \\ \hline
+		WP 6 & SYSTEM VALIDATION & RTD & 2 & 35.00 & 10 & 24 \\ \hline
+		WP 7 & DISSEMINATION AND EXPLOITATION & MGT & 3 & 13.00 & 1 & 24 \\ \hline
+	\end{tabular}
+\end{center}
 
 \newpage
-\item \textbf{TODO}
-\paragraph{Objectives:} \paragraph{}
-TODO
-\paragraph{Description of the work:} \paragraph{}
-TODO
-\paragraph{Description of Deliverables:} \paragraph{}
-TODO
+\section{WT2: List of deliverables}
+\begin{center}
+	\begin{tabular}{ |p{1cm}|p{2.5cm}|p{0.8cm}|p{0.8cm}|p{0.9cm}|p{1cm}|p{0.5cm}|p{0.8cm}| }
+		\hline
+		Delive-rable Number & Deliverable Title & WP Number & Lead beneficiary number & Est. indicative person-months & Nature & D. level & Deli-very date \\ \hline
+		D1.1 & Project Presentation & 1 & 1 & 0.50 & O & PU & 1 \\ \hline
+		D1.2 & 1st Periodic Progress Report & 1 & 1 & 3.00 & R & CO & 12 \\ \hline
+		D1.3 & 2nd Periodic Progress Report & 1 & 1 & 3.50 & R & CO & 24 \\ \hline
+		D1.4 & Final Project Report & 1 & 1 & 1.00 & R & PU & 24 \\ \hline
+		D2.1 & List of usage scenarios and user requirements & 2 & 3 & 25.00 & R & PU & 6 \\ \hline
+		D3.1 & Research Report & 3 & 2 & 33.00 & R & PU & 12 \\ \hline
+		D4.1 & Design/Prototype  & 4 & 2 & 40.00 & O & CO & 1 \\ \hline
+		D4.2 & Finalize product specification  & 4 & 1 & 21.00 & O & CO & 8 \\ \hline
+		D5.1 & Development specification & 5 & 1 & 62.00 & O & CO & 12 \\ \hline
+		D5.2 & Test plan & 5 & 3 & 18.00 & O & CO & 20 \\ \hline
+		D6.1 & End-to-end valuation plan & 6 & 2 & 9.00 & R & PU & 16 \\ \hline
+		D6.2 & System validation report & 6 & 3 & 26.00 & R & PU & 24 \\ \hline
+		D7.1 & Preliminary dissemination and exploitation report & 7 & 3 & 5.00 & R & PU & 8 \\ \hline
+		D7.2 & Final dissemination and exploitation report & 7 & 3 & 8.00 & R & PU & 24 \\ \hline
+	\end{tabular}
+\end{center}
+
+\textbf{Nature}: R: Report (Document); O: Other (software, technical diagram, etc.)
+
+\textbf{Dissemination level}: PU = Public; CO = Confidential
+
+
 
 \newpage
-\item \textbf{TODO}
-\paragraph{Objectives:} \paragraph{}
-TODO
-\paragraph{Description of the work:} \paragraph{}
-TODO
-\paragraph{Description of Deliverables:} \paragraph{}
-TODO
-\end{enumerate}
+\section{Work package description}
+
+\subsection{WP1: Management}
+
+\begin{center}
+	\begin{tabular}{ |p{3cm}|p{4cm}||p{2cm}|p{1cm}| }
+		\hline
+		Work Package Number & WP 1 & Start month & 1  \\ \hline
+		Type of activity & MGT & End month & 24 \\ \hline
+		Work Package Title & MANAGEMENT & Lead beneficiary number & 1 \\ \hline
+	\end{tabular}
+\end{center}
+
+\subsubsection{Objectives:}
+ \paragraph{O1.1}Identify the management related requirements of the HtoCppMetaCom system
+ \paragraph{O1.2} Cooperate and supervise project objectives, schedule and deadlines technical coordination
+ \paragraph{O1.3} To perform the financial and administrative tasks of the project (administrative and financial coordination)
+	 
+\subsubsection{Description of the work (tasks):}
+ \paragraph{T1.1} Management system requirements: This task builds and
+ supervises realizations of agile principles and practices of the project.
+ \paragraph{T1.2} Project Handbook: This activity provides the project management handbook that summarizes all the related information such as
+ milestones, deliverables, templates to be used, communication platform details and procedures to be followed.
+ \paragraph{T1.3} Project Administration: This activity is devoted to providing the management reports summarizing annual technical activities and
+ it is a tool for project review process.
+ \paragraph{T1.4} Periodic Management Reports: This activity provides the deliverable documents containing the project activities summarizing the key issues
+ addressed in the project, achievements and open issues on an annual basis.
+ 
+\subsubsection{List of Deliverables:}
+\begin{center}
+	\begin{tabular}{ |p{1.6cm}|p{2cm}|p{0.8cm}|p{0.8cm}|p{0.9cm}|p{1cm}|p{0.5cm}|p{0.8cm}| }
+		\hline
+		Deliverable Number & Deliverable Title & WP Number & Lead beneficiary number & Est. indicative person-months & Nature & D. level & Deli-very date \\ \hline
+		D1.1 & Project Presentation & 1 & 1 & 0.50 & O & PU & 1 \\ \hline
+		D1.2 & 1st Periodic Progress Report & 1 & 1 & 3.00 & R & CO & 12 \\ \hline
+		D1.3 & 2nd Periodic Progress Report & 1 & 1 & 3.50 & R & CO & 24 \\ \hline
+		D1.4 & Final Project Report & 1 & 1 & 1.00 & R & PU & 24 \\ \hline
+	\end{tabular}
+\end{center}
+ 
+\subsubsection{Description of Deliverables:}
+\paragraph{D1.1} Project Presentation: This deliverable is a public description of the project in terms of main goals, key issues, technical approach and achievements. [month 1]
+\paragraph{D1.2} 1st Periodic Progress Report: This will provide a summary of the major results and achievements of the project during the 1st 12 months. [month 12]
+\paragraph{D1.3} 2nd Periodic Progress Report: This will provide a summary of the major results and achievements of the project during the 2nd 12 months. [month 24]
+\paragraph{D1.4} Final Project Report: A Final Project Report will also be produced at the end of the project to summarize in a public document the major results and achievements of the project and this will conclude the project's technical work. [month 24]
+
+\newpage
+\subsection{WP2: Requirements Identification}
+
+\begin{center}
+	\begin{tabular}{ |p{3cm}|p{4cm}||p{2cm}|p{1cm}| }
+		\hline
+		Work Package Number & WP 2 & Start month & 1  \\ \hline
+		Type of activity & RTD & End month & 24 \\ \hline
+		Work Package Title & REQUIREMENTS IDENTIFICATION & Lead beneficiary number & 3 \\ \hline
+	\end{tabular}
+\end{center}
+
+\subsubsection{Objectives:}
+\paragraph{O2.1} Research the user requirements and usage scenarios of the HtoCppMetaCom system
+\paragraph{O2.2}  Research and define quality metrics for service design, service usability, and fostering motivation
+\subsubsection{Description of the work (tasks):}
+\paragraph{T2.1} User requirements and usage scenarios: During this task we will identify and prioritize the scenarios i.e. under what conditions will the system be used
+to be addressed in the project. 
+\subsubsection{List of deliverables:}
+\begin{center}
+	\begin{tabular}{ |p{1.6cm}|p{2cm}|p{0.8cm}|p{0.8cm}|p{0.9cm}|p{1cm}|p{0.5cm}|p{0.8cm}| }
+		\hline
+		Deliverable Number & Deliverable Title & WP Number & Lead beneficiary number & Est. indicative person-months & Nature & D. level & Deli-very date \\ \hline
+		D2.1 & List of usage scenarios and user requirements & 2 & 3 & 25.00 & R & PU & 6 \\ \hline
+	\end{tabular}
+\end{center}
+
+\subsubsection{Description of Deliverables:}
+\paragraph{D2.1} List of usage scenarios and user requirements [month 6]
+
+\newpage
+
+\subsection{WP3: Research C++ Template Metaprogramming}
+
+\begin{center}
+	\begin{tabular}{ |p{3cm}|p{4cm}||p{2cm}|p{1cm}| }
+		\hline
+		Work Package Number & WP 3 & Start month & 1  \\ \hline
+		Type of activity & RTD & End month & 24 \\ \hline
+		Work Package Title & RESEARCH C++ TEMPLATE METAPROGRAMMING & Lead beneficiary number & 2 \\ \hline
+	\end{tabular}
+\end{center}
+
+\subsubsection{Objectives:}
+\paragraph{O3.1} Research Haskell into C++ template metaprogram compilers
+\paragraph{O3.2} Define requirements for an improved/enhanced compiler
+\subsubsection{Description of the work (tasks):}
+\paragraph{T3.1} Haskell into C++ template metaprogram compilers: During this task we identifiy potential improvements over the current compilers.
+\paragraph{T3.2} Behavorial representation of the compiler
+
+\subsubsection{List of deliverables:}
+\begin{center}
+	\begin{tabular}{ |p{1.6cm}|p{2cm}|p{0.8cm}|p{0.8cm}|p{0.9cm}|p{1cm}|p{0.5cm}|p{0.8cm}| }
+		\hline
+		Deliverable Number & Deliverable Title & WP Number & Lead beneficiary number & Est. indicative person-months & Nature & D. level & Deli-very date \\ \hline
+		D3.1 & Research Report & 3 & 2 & 33.00 & R & PU & 12 \\ \hline
+	\end{tabular}
+\end{center}
+
+\subsubsection{Description of Deliverables:}
+\paragraph{D3.1} Research Report: A Research Report will be produced at the end of the research to summarize in a public document the major results and achievements of the research. [month 12]
+
+\newpage
+\subsection{WP4: Haskell to C++ Compiler}
+ 
+\begin{center}
+ 	\begin{tabular}{ |p{3cm}|p{4cm}||p{2cm}|p{1cm}| }
+ 		\hline
+ 		Work Package Number & WP 4 & Start month & 1  \\ \hline
+ 		Type of activity & RTD & End month & 24 \\ \hline
+ 		Work Package Title & HASKELL TO C++ COMPILER & Lead beneficiary number & 1 \\ \hline
+ 	\end{tabular}
+\end{center}
+
+\subsubsection{Objectives:}
+\paragraph{O4.1} Specify an improved Haskell into C++ compiler
+
+\subsubsection{Description of the work (tasks):}
+\paragraph{T4.1} Create a generator: The main focus here is to generate C++ template metaprograms from Haskell efficiently.
+\paragraph{T4.2} High Level Project Plan: Gantt Chart of high level project tasks. Should identify the different phases of the lifecycle and deliverables as milestones. 
+
+\subsubsection{List of deliverables:}
+\begin{center}
+	\begin{tabular}{ |p{1.6cm}|p{2cm}|p{0.8cm}|p{0.8cm}|p{0.9cm}|p{1cm}|p{0.5cm}|p{0.8cm}| }
+		\hline
+		Deliverable Number & Deliverable Title & WP Number & Lead beneficiary number & Est. indicative person-months & Nature & D. level & Deli-very date \\ \hline
+		D4.1 & Design/Prototype  & 4 & 2 & 40.00 & O & CO & 1 \\ \hline
+		D4.2 & Finalize product specification  & 4 & 1 & 21.00 & O & CO & 8 \\ \hline
+	\end{tabular}
+\end{center}
+
+\subsubsection{Description of Deliverables:}
+\paragraph{D4.1} Design/Prototype: Infrastructure Design Document, Front-End/Middle Tier
+Design Document. 
+\paragraph{D4.2} Finalize product specification
+
+\newpage
+
+\subsection{WP5: Improve Compiler}
+ 
+ \begin{center}
+ 	\begin{tabular}{ |p{3cm}|p{4cm}||p{2cm}|p{1cm}| }
+ 		\hline
+ 		Work Package Number & WP 5 & Start month & 1  \\ \hline
+ 		Type of activity & RTD & End month & 24 \\ \hline
+ 		Work Package Title & IMPROVE COMPILER & Lead beneficiary number & 1 \\ \hline
+ 	\end{tabular}
+ \end{center}
+
+\subsubsection{Objectives:}
+\paragraph{O5.1} Significantly improve the current compiler
+\paragraph{O5.2} Achieve 100\% faster runtime performance
+
+\subsubsection{Description of the work (tasks):}
+\paragraph{T5.1} Improve generator: Improve the current generator, mainly focusing on the performance.
+
+\subsubsection{List of deliverables:}
+\begin{center}
+	\begin{tabular}{ |p{1.6cm}|p{2cm}|p{0.8cm}|p{0.8cm}|p{0.9cm}|p{1cm}|p{0.5cm}|p{0.8cm}| }
+		\hline
+		Deliverable Number & Deliverable Title & WP Number & Lead beneficiary number & Est. indicative person-months & Nature & D. level & Deli-very date \\ \hline
+		D5.1 & Development specification & 5 & 1 & 62.00 & O & CO & 12 \\ \hline
+		D5.2 & Test plan & 5 & 3 & 18.00 & O & CO & 20 \\ \hline
+	\end{tabular}
+\end{center}
+
+\subsubsection{Description of Deliverables:}
+\paragraph{D5.1} Development specification: Contains the following sections: Low level data flow, Updated Specs, Unit Tested code along with appropriate release documentation
+\paragraph{D5.2} Test plan: Detailed test plan for each module (based on User acceptance
+criteria Security considerations). Separate sections for different types of testing to be conducted (Stress test, Performance Test, etc. inculding sub-sections for
+different modules to be tested). 
+
+\newpage
+
+\subsection{WP6: System Validation}
+
+\begin{center}
+	\begin{tabular}{ |p{3cm}|p{4cm}||p{2cm}|p{1cm}| }
+		\hline
+		Work Package Number & WP 6 & Start month & 10  \\ \hline
+		Type of activity & RTD & End month & 24 \\ \hline
+		Work Package Title & SYSTEM VALIDATION & Lead beneficiary number & 2 \\ \hline
+	\end{tabular}
+\end{center}
+
+\subsubsection{Objectives:}
+\paragraph{O6.1} End-to-end validate HtoCppMetaCom basic components
+\paragraph{O6.2} Analyze and gather all user feedback
+\subsubsection{Description of the work (tasks):}
+\paragraph{T6.1} Field trials with end users: The aim of this task is to do field study to validate the part of the HtoCppMetaCom system. 
+
+
+\subsubsection{List of deliverables:}
+\begin{center}
+	\begin{tabular}{ |p{1.6cm}|p{2cm}|p{0.8cm}|p{0.8cm}|p{0.9cm}|p{1cm}|p{0.5cm}|p{0.8cm}| }
+		\hline
+		Deliverable Number & Deliverable Title & WP Number & Lead beneficiary number & Est. indicative person-months & Nature & D. level & Deli-very date \\ \hline
+		D6.1 & End-to-end valuation plan & 6 & 2 & 9.00 & R & PU & 16 \\ \hline
+		D6.2 & System validation report & 6 & 3 & 26.00 & R & PU & 24 \\ \hline
+	\end{tabular}
+\end{center}
+
+\subsubsection{Description of Deliverables:}
+\paragraph{D6.1} End-to-end valuation plan: Includes comprehensive planning details for end-to-end system validation [month 16]
+\paragraph{D6.2} System validation report:  Summarizing system validation reports and evaluation from experiments and
+trials [month 24]
+\newpage
+
+\subsection{WP7: Dissemination and Exploitation }
+
+\begin{center}
+	\begin{tabular}{ |p{3cm}|p{4cm}||p{2cm}|p{1cm}| }
+		\hline
+		Work Package Number & WP 7 & Start month & 10  \\ \hline
+		Type of activity & MGT & End month & 24 \\ \hline
+		Work Package Title & DISSEMINATION AND EXPLOITATION & Lead beneficiary number & 3 \\ \hline
+	\end{tabular}
+\end{center}
+
+\subsubsection{Objectives:}
+\paragraph{O7.1} To ensure successful dissemination of HtoCPPMetaCom results to key stakeholders 
+\paragraph{O7.2} Assess opportunities for partner exploitation
+
+\subsubsection{Description of the work (tasks):}
+\paragraph{T7.1} Creating dissemination strategy: The dissemination strategy will ensure that progress and results of PRECIOUS are distributed frequently to key
+stakeholders.
+\paragraph{T7.2} Exploitation: This task includes all activities that foster the successful application of project results and which enables
+the partners to draw benefit after the project lifetime.
+
+\subsubsection{List of deliverables:}
+\begin{center}
+	\begin{tabular}{ |p{1.6cm}|p{2cm}|p{0.8cm}|p{0.8cm}|p{0.9cm}|p{1cm}|p{0.5cm}|p{0.8cm}| }
+		\hline
+		Deliverable Number & Deliverable Title & WP Number & Lead beneficiary number & Est. indicative person-months & Nature & D. level & Deli-very date \\ \hline
+		D7.1 & Preliminary dissemination and exploitation report & 7 & 3 & 5.00 & R & PU & 8 \\ \hline
+		D7.2 & Final dissemination and exploitation report & 7 & 3 & 8.00 & R & PU & 24 \\ \hline
+	\end{tabular}
+\end{center}
+
+\subsubsection{Description of Deliverables:}
+\paragraph{D7.1} Preliminary dissemination and exploitation report: Details of activities to promote project visibility (including project communication materials, website, start-up panel initialization) and outline of future dissemination and exploitation strategies. [month 8]
+\paragraph{D7.2}  Final dissemination and exploitation report: Report summarizing project dissemination activities (publishing, dissemination events, presentations, etc.) and exploitation efforts during and beyond the project lifetime. [month 24]
 
 \end{document}
