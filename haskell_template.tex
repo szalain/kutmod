@@ -49,17 +49,23 @@ There are different cases in C++ when we want to operate on data what is availab
 \section{Introduction}
 Nowadays the use of template metaprogramming ofter occurs in modern, up-to-date C++ codes. The main reason is the ability of template metaprogrmming to make complex algorithm execution at compile time. Template metaprograms are used in expression templates, static interface checking, code optimization with adaption, language embedding and active libraries. ,,However, as this capability of C++ was not a primary design goal, the
 language is not capable of clean expression of template metaprograms. The complicated syntax leads to the creation of code that
-is hard to write, understand and maintain. Despite that template
+is hard to write, understand and maintain. C++ wasn’t designed to support template
+metaprogramming, this capability of the language was discovered
+later. Because of this, template metaprogramming is not a simple
+and easy to use tool. The syntax is intricate and error messages
+displayed by the C++ compilers are difficult to read and understand.
+Having tools supporting development of template metaprograms
+could let developers safely use them in production software. Despite that template
 metaprogramming has a strong relationship with functional programming paradigm, existing libraries do not follow these requirements. Today programmers write metaprograms for various reasons,
 like implementing expression templates, where we can replace
 runtime computations with compile-time activities to enhance runtime performance; static interface checking, which increases the
 ability of the compile-time to check the requirements against template parameters, i.e. they form constraints on template parameters, active libraries, acting dynamically during compiletime, making decisions and optimizations based on programming
 contexts.'' \cite{porkolab2009c++}  \\
-TODO \\
-\colorbox{orange!30}{+ Miért lenne érdemes Haskellt használni}
-\colorbox{orange!30}{Vagy hogyan használhatjuk a Haskellt} 
-\colorbox{orange!30}{C++ metaprogram generálásához}
-One of the first languages which could generate C++ template metaprogram was Lambda, a Haskell-like language used to express lambda expressions \cite{porkolab2009functional}
+The idea behind using Haskell to generate C++ metaprogram code is creating the hardly understandable, unmaintainable C++ template code with Haskell's simple, easy to write, easily maintainable, debuggable functional code. With this ,,The developer can focus on the
+functionality of the metaprogram, reusing a huge number of existing algorithms
+and data structures implemented as Haskell libraries make them available to the
+C++ metaprogramming community''. \cite{porkolab2009functional}  \\
+One of the first languages which could generate C++ template metaprogram was Lambda, a Haskell-like language used to express lambda expressions. Including Lambda library in a C++ code allowed the developer to implement Haskell-like lambda expressions in the code, exchanging the C++ template metaprogram code.
 \begin{center}
 \begin{lstlisting}
 #include <lambda.h>
@@ -81,15 +87,15 @@ int main()
 cout << lambda::Reduce< HaskellMain >::type::value << endl;
 }
 \end{lstlisting}
-An embedded Lambda code inside C++ program
+An embedded Lambda\cite{porkolab2009functional} code inside C++ program
 \end{center}
-In section 2 we discuss currently used methods to generate C++ metaprograms from Haskell(-like) code. In section 3 we present our approach of compiling Haskell code. In section 4 we compare our compiler's speed to other compilers'.
+This paper is organized as follows: In section 2 we discuss currently used methods to generate C++ metaprograms from Haskell(-like) code. In section 3 we present our approach of compiling Haskell code. In section 4 we compare our compiler's performance to other compilers'.
 \section{Current Haskell to C++ metaprogram compilers}
 The currently available Haskell to C++ metaprogram compilers have different methods to generate C++ metaprograms, but share strong disadvantages like functionality limitations or low speed. In this paper we discuss two popular compiling methods.
 \subsection{Compiling with other languages}
-This is the most used method to generate C++ metaprograms from Haskell code. The Haskell code goes through at least two different languages' transformation before the metaprogram code is generated from it. One functioning approach is to translate Haskell code to a similar language which will be the input for the language which will be parsed to C++ template metaprogram code. For example, C++ metaprogram code can be generated with translating Haskell code to Haskell-like \textit{Yhc.Core} code, which is adjusted to \textit{Lambda} language. Finally the Lambda code is used to generate C++ metaprogram code.\cite{porkolab2009c++} This method has high time costs because the Haskell code goes through many different transformations and translations as well as Yhc.Core's format is write only and types are not present in the language.\cite{yhc}
+This is the most used method to generate C++ metaprograms from Haskell code. The Haskell code goes through at least two different languages' transformation before the metaprogram code is generated from it. One functioning approach is to translate Haskell code to a similar language which will be the input for the language which will be parsed to C++ template metaprogram code. For example, C++ metaprogram code can be generated with translating Haskell code to Haskell-like \textit{Yhc.Core} code, which is adjusted to above mentioned \textit{Lambda} language. Finally the Lambda code is used to generate C++ metaprogram code.\cite{porkolab2009c++} This compiling method supports many Haskell functional programming aspects: Allows lazy and eager evaluation of lambda expressions, currying (e. g. if only one parameter given to \textit{\textbackslash x.\textbackslash y. + x y} anonymous function, a new function will appear requiring only one parameter), recursive lambda functions (e. g. factorial function), integer constants and variables. The compiler has high time costs because the Haskell code goes through many different transformations and translations as well as Yhc.Core's format is write only, types are not present in the language, has only top level functions and does not contain where statements.\cite{yhc}
 \subsection{compiling with one Haskell-like language}
-This method uses only one Haskell-like language to generate C++ metaprogram code. The first "Haskell-like code to C++ template metaprogram" compiler, MetaFun\cite{metafun} uses this method to make C++ metaprogram code from \textit{Kiff} language. This language substitutes Haskell to make generating template metaprograms easier and faster to code. While this method is faster than the first in terms of coding and code generating, using a Haskell-like language comes with many disadvantages: The language likely won't support all useful Haskell strategies, functions and expressions and might be not optimized well (e. g. Kiff doesn't allow currying in function calls, it has no support for lambda expressions and has zero optimization) and the new language must be learnt properly to generate fast and correct template metaprograms.
+This method uses only one Haskell-like language to generate C++ metaprogram code. The first "Haskell-like code to C++ template metaprogram" compiler, MetaFun\cite{metafun} uses this method to make C++ metaprogram code from \textit{Kiff} language. This language substitutes Haskell to make generating template metaprograms easier and faster to code. While this method is faster than the first in terms of coding and code generating, using a Haskell-like language comes with many disadvantages: The language likely will not support all useful Haskell strategies, functions and expressions and might not be optimized well (e. g. Kiff does not allow currying in function calls, it has no support for lambda expressions and has zero optimization) and the new language must be learnt properly to generate  correct and efficient template metaprograms.
 \begin{lstlisting}[language=Haskell, caption =Definition of sum using Kiff with comments of missing functions]
 foldl :: (a -> b -> a) -> a -> [b] -> a
 foldl f x [] = x
@@ -104,9 +110,7 @@ sum xs = foldl add 0 xs
 
 \section{Compiling from Haskell directly}
 Our compiler (FHC = Fast Haskell to C++) uses .............. language and pure Haskell code to generate C++ metaprogram.\\
-\colorbox{orange!30}{Megvalósítás vázlatos kidolgozása}\\
-\colorbox{orange!30}{A compilerünk által lefordított kódhoz rövid ismertető}\\
-\colorbox{orange!30}{hogy mi hogy lett fordítva, ez lehetne akár felsorolásban is}\\
+TODO: MEGVALÓSÍTÁS \\
 
 \begin{comment}
 HASKELL CODE\\
@@ -114,7 +118,7 @@ HASKELL CODE\\
 C++ CODE
 \end{comment}
 Our compiler was tested on small, popular Haskell functions\cite{bartoszhaskell}
-Compiling the factorial function using Lambda\cite{porkolab2009c++} language:
+Compiling the factorial function using Lambda language:
 \begin{center}
 \begin{lstlisting}
 __lambda factorial =
@@ -170,6 +174,7 @@ struct factorial : factorial__implementation
 \end{center}
 
 Our compiler compiles the factorial function to a more readable, smaller C++ metaprogram code.
+TODO
 \begin{center}
 \begin{lstlisting}[language=Haskell]
 fact 0 = 1
@@ -241,7 +246,7 @@ or_combinator {
 };
 \end{lstlisting}
 \end{center}
-
+TODO
 
 \begin{comment}
 \begin{lstlisting}[language=]
@@ -260,10 +265,10 @@ or_combinator {
 
 \end{lstlisting}
 \end{comment}
-\section{Comparison of compiling times}
-TODO...\\
-To measure different compile times we have taken the average compile time of 100 separate runs for each method on Haskell template codes discussed in section 3.
-To calculate the compile time of calling Haskell functions from C++ we subtracted the compile time of the pure C++ code from the compile time of ...
+\section{Comparison of compiling performances}
+All performance benchmarkings were run on the same computer (Processor: AMD FX-8300, RAM: 20 GB, Operating system: Windows 7) using process runtime watcher \textit{Measure-Command \{start-process <process> -argumentlist "arg" -wait\}} command in PowerShell.
+To measure different compile times (milliseconds) we have taken the average compile time of 100 separate runs for each method on Haskell template codes discussed in section 3.
+To calculate the compile time of calling Haskell functions from C++ we subtracted the compile time of the pure, templateless C++ code from the compile time of extended C++ code.
 \begin{center}
 \begin{tikzpicture}
     \begin{axis}[
@@ -285,6 +290,13 @@ To calculate the compile time of calling Haskell functions from C++ we subtracte
 \end{tikzpicture}
 \captionof{figure}{Compile time difference between FHC and Haskell function calling from C++}
 \end{center}
+
+\begin{itemize}
+	\item The huge overhead time cost has disappeared from our compiler's compile time.
+	\item Using the most costly list functions took 855 ms for FHC and 7181 ms for external function calling which is  740\% higher.
+\end{itemize}
+
+With the overhead time having eliminated from FHC's compiling time we have successfully achieved our primary goal. Nonetheless to have a widely used, efficient compiler, we had to optimize it to surpass the low compiling time of the other existing compilers.
 
 \begin{center}
 \begin{tikzpicture}
@@ -308,6 +320,10 @@ To calculate the compile time of calling Haskell functions from C++ we subtracte
 \end{tikzpicture}
 \captionof{figure}{Compile time difference between compilers}
 \end{center}
+
+\begin{itemize}
+	\item On average, our compiler requires only 70\% of compile time of one language compiler and 28\% of compile time of the multilanguage compiler.
+\end{itemize}
 
 \bibliography{references} 
 \bibliographystyle{ieeetr}
